@@ -23,10 +23,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/apache/incubator-answer/internal/base/validator"
-	"github.com/apache/incubator-answer/internal/entity"
-	"github.com/apache/incubator-answer/pkg/converter"
-	"github.com/apache/incubator-answer/pkg/uid"
+	"github.com/apache/answer/internal/base/validator"
+	"github.com/apache/answer/internal/entity"
+	"github.com/apache/answer/pkg/converter"
+	"github.com/apache/answer/pkg/uid"
 )
 
 const (
@@ -346,6 +346,7 @@ const (
 	QuestionOrderCondHot        = "hot"
 	QuestionOrderCondScore      = "score"
 	QuestionOrderCondUnanswered = "unanswered"
+	QuestionOrderCondRecommend  = "recommend"
 
 	// HotInDays limit max days of the hottest question
 	HotInDays = 90
@@ -355,7 +356,7 @@ const (
 type QuestionPageReq struct {
 	Page      int    `validate:"omitempty,min=1" form:"page"`
 	PageSize  int    `validate:"omitempty,min=1" form:"page_size"`
-	OrderCond string `validate:"omitempty,oneof=newest active hot score unanswered" form:"order"`
+	OrderCond string `validate:"omitempty,oneof=newest active hot score unanswered recommend frequent" form:"order"`
 	Tag       string `validate:"omitempty,gt=0,lte=100" form:"tag"`
 	Username  string `validate:"omitempty,gt=0,lte=100" form:"username"`
 	InDays    int    `validate:"omitempty,min=1" form:"in_days"`
@@ -497,4 +498,18 @@ type PersonalCollectionPageReq struct {
 	Page     int    `validate:"omitempty,min=1" form:"page"`
 	PageSize int    `validate:"omitempty,min=1" form:"page_size"`
 	UserID   string `json:"-"`
+}
+
+type GetQuestionLinkReq struct {
+	Page       int    `validate:"omitempty,min=1" form:"page"`
+	PageSize   int    `validate:"omitempty,min=1,max=100" form:"page_size"`
+	QuestionID string `validate:"required" form:"question_id"`
+	OrderCond  string `validate:"omitempty,oneof=newest active hot score unanswered recommend frequent" form:"order"`
+	InDays     int    `validate:"omitempty,min=1" form:"in_days"`
+
+	LoginUserID string `json:"-"`
+}
+
+type GetQuestionLinkResp struct {
+	QuestionPageResp
 }

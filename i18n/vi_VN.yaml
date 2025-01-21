@@ -34,7 +34,7 @@ backend:
       other: Trùng lặp yêu cầu.
   action:
     report:
-      other: Gắn Cờ
+      other: Gắn nhãn
     edit:
       other: Chỉnh sửa
     delete:
@@ -64,7 +64,7 @@ backend:
       admin:
         other: Quản trị viên
       moderator:
-        other: Điều hành viên
+        other: Người điều hành
     description:
       user:
         other: Mặc định không có quyền truy cập đặc biệt.
@@ -94,7 +94,7 @@ backend:
     rank_report_add_label:
       other: Gắn Cờ
     rank_comment_vote_up_label:
-      other: Upvote cho một bình luận
+      other: Bình chọn lên cho bình luận
     rank_link_url_limit_label:
       other: Đăng nhiều hơn 2 liên kết cùng một lúc
     rank_question_vote_up_label:
@@ -138,13 +138,15 @@ backend:
   pass:
     other: Mật khẩu
   original_text:
-    other: post này
+    other: Bài viết này
   email_or_password_wrong_error:
     other: Email và mật khẩu không trùng khớp.
   error:
     common:
       invalid_url:
         other: URL không tồn tại.
+      status_invalid:
+        other: Trạng thái không hợp lệ
     password:
       space_invalid:
         other: Mật khẩu không thể tồn tại khoảng trắng.
@@ -187,7 +189,7 @@ backend:
         other: Không tìm thấy file ngôn ngữ.
     object:
       captcha_verification_failed:
-        other: Sai Captcha.
+        other: Xác minh Captcha thất bại.
       disallow_follow:
         other: Bạn không được phép theo dõi.
       disallow_vote:
@@ -311,34 +313,32 @@ backend:
     site_info:
       config_not_found:
         other: Không tìm thấy cấu hình trang.
+    badge:
+      object_not_found:
+        other: Đối tượng không tìm thấy
   reason:
     spam:
       name:
-        other: Lạm dụng
+        other: thư rác
       desc:
-        other: Bài đăng này là quảng cáo hoặc phá hoại. Nó không hữu ích hoặc liên quan đến chủ đề hiện tại.
+        other: Bài đăng này quảng cáo hoặc phá hoại. Nó không hữu ích hoặc liên quan đến chủ đề hiện tại.
     rude_or_abusive:
       name:
         other: thô lỗ hoặc lạm dụng
       desc:
-        other:
-          - Một người lý trí sẽ thấy nội dung này không phù hợp để thảo luận tôn trọng
-          - Đàm thoại
+        other: "A reasonable person would find this content inappropriate for respectful discourse."
     a_duplicate:
       name:
         other: một bản sao
       desc:
-        other: Câu hỏi này đã được hỏi trước đó và đã có câu trả lời.
+        other: Câu hỏi này đã được hỏi trước đó, đã có câu trả lời.
       placeholder:
         other: Nhập liên kết câu hỏi hiện tại
     not_a_answer:
       name:
-        other: không phải là câu trả lời
+        other: không phải câu trả lời
       desc:
-        other:
-          - Nội dung này được đăng dưới dạng câu trả lời, nhưng nó không hề trả lời cho câu hỏi...
-          - câu hỏi. Nó có thể là một chỉnh sửa, một bình luận, một câu hỏi khác,
-          - hoặc bị xóa hoàn toàn.
+        other: "This was posted as an answer, but it does not attempt to answer the question. It should possibly be an edit, a comment, another question,or deleted altogether."
     no_longer_needed:
       name:
         other: không còn cần thiết
@@ -397,9 +397,7 @@ backend:
         name:
           other: cần chi tiết hoặc rõ ràng
         desc:
-          other:
-            - Câu hỏi này hiện bao gồm nhiều câu hỏi trong một. Nó nên tập trung vào một vấn đề duy nhất
-            - chỉ tập trung vào một vấn đề.
+          other: This question currently includes multiple questions in one. It should focus on one problem only.
       other:
         name:
           other: điều gì đó khác
@@ -415,12 +413,12 @@ backend:
     deleted_title:
       other: Câu hỏi đã xóa
     questions_title:
-      other: Questions
+      other: Các câu hỏi
   tag:
     tags_title:
-      other: Tags
+      other: Thẻ
     no_description:
-      other: The tag has no description.
+      other: Thẻ không có mô tả.
   notification:
     action:
       update_question:
@@ -459,47 +457,49 @@ backend:
         other: bình luận đã bình chọn lên
       invited_you_to_answer:
         other: đã mời bạn trả lời
+      earned_badge:
+        other: Bạn đã nhận được huy hiệu "{{.BadgeName}}"
   email_tpl:
     change_email:
       title:
         other: "[{{.SiteName}}] Xác nhận địa chỉ email mới của bạn"
       body:
-        other: "Xác nhận địa chỉ email mới của bạn cho {{.SiteName}} bằng cách nhấp vào liên kết sau:<br>\n<a href='{{.ChangeEmailUrl}}' target='_blank'>{{.ChangeEmailUrl}}</a><br><br>\n\nNếu bạn không yêu cầu thay đổi này, vui lòng bỏ qua email này.\n"
+        other: "Confirm your new email address for {{.SiteName}} by clicking on the following link:<br>\n<a href='{{.ChangeEmailUrl}}' target='_blank'>{{.ChangeEmailUrl}}</a><br><br>\n\nIf you did not request this change, please ignore this email.<br><br>\n\n--<br>\nNote: This is an automatic system email, please do not reply to this message as your response will not be seen."
     new_answer:
       title:
         other: "[{{.SiteName}}] {{.DisplayName}} đã trả lời câu hỏi của bạn"
       body:
-        other: "<a href='{{.AnswerUrl}}'>{{.QuestionTitle}}</a><br><br>\n\n{{.DisplayName}}:<br>\n<blockquote>{{.AnswerSummary}}</blockquote><br>\n<a href='{{.AnswerUrl}}'>Xem trên {{.SiteName}}</a><br><br>\n\n--<br>\n<small><a href='{{.UnsubscribeUrl}}'>Hủy đăng ký</a></small>"
+        other: "<a href='{{.AnswerUrl}}'>{{.QuestionTitle}}</a><br><br>\n\n{{.DisplayName}}:<br>\n<blockquote>{{.AnswerSummary}}</blockquote><br>\n<a href='{{.AnswerUrl}}'>View it on {{.SiteName}}</a><br><br>\n\n--<br>\nNote: This is an automatic system email, please do not reply to this message as your response will not be seen.<br><br>\n\n<small><a href='{{.UnsubscribeUrl}}'>Unsubscribe</a></small>"
     invited_you_to_answer:
       title:
         other: "[{{.SiteName}}] {{.DisplayName}} mời bạn trả lời"
       body:
-        other: "<a href='{{.InviteUrl}}'>{{.QuestionTitle}}</a><br><br>\n\n{{.DisplayName}}:<br>\n<blockquote>Tôi nghĩ bạn có thể biết câu trả lời.</blockquote><br>\n<a href='{{.InviteUrl}}'>Xem trên {{.SiteName}}</a><br><br>\n\n--<br>\n<small><a href='{{.UnsubscribeUrl}}'>Hủy đăng ký</a></small>"
+        other: "<a href='{{.InviteUrl}}'>{{.QuestionTitle}}</a><br><br>\n\n{{.DisplayName}}:<br>\n<blockquote>I think you may know the answer.</blockquote><br>\n<a href='{{.InviteUrl}}'>View it on {{.SiteName}}</a><br><br>\n\n--<br>\nNote: This is an automatic system email, please do not reply to this message as your response will not be seen.<br><br>\n\n<small><a href='{{.UnsubscribeUrl}}'>Unsubscribe</a></small>"
     new_comment:
       title:
         other: "[{{.SiteName}}] {{.DisplayName}} đã bình luận về bài đăng của bạn"
       body:
-        other: "<a href='{{.CommentUrl}}'>{{.QuestionTitle}}</a><br><br>\n\n{{.DisplayName}}:<br>\n<blockquote>{{.CommentSummary}}</blockquote><br>\n<a href='{{.CommentUrl}}'>Xem trên {{.SiteName}}</a><br><br>\n\n--<br>\n<small><a href='{{.UnsubscribeUrl}}'>Hủy đăng ký</a></small>"
+        other: "<a href='{{.CommentUrl}}'>{{.QuestionTitle}}</a><br><br>\n\n{{.DisplayName}}:<br>\n<blockquote>{{.CommentSummary}}</blockquote><br>\n<a href='{{.CommentUrl}}'>View it on {{.SiteName}}</a><br><br>\n\n--<br>\nNote: This is an automatic system email, please do not reply to this message as your response will not be seen.<br><br>\n\n<small><a href='{{.UnsubscribeUrl}}'>Unsubscribe</a></small>"
     new_question:
       title:
         other: "[{{.SiteName}}] Câu hỏi mới: {{.QuestionTitle}}"
       body:
-        other: "<a href='{{.QuestionUrl}}'>{{.QuestionTitle}}</a><br>\n<small>{{.Tags}}</small><br><br>\n\n--<br>\n<small><a href='{{.UnsubscribeUrl}}'>Hủy đăng ký</a></small>"
+        other: "<a href='{{.QuestionUrl}}'>{{.QuestionTitle}}</a><br>\n<small>{{.Tags}}</small><br><br>\n\n--<br>\nNote: This is an automatic system email, please do not reply to this message as your response will not be seen.<br><br>\n\n<a href='{{.UnsubscribeUrl}}'>Unsubscribe</a></small>"
     pass_reset:
       title:
         other: "[{{.SiteName}}] Đặt lại mật khẩu"
       body:
-        other: "Ai đó đã yêu cầu đặt lại mật khẩu của bạn trên {{.SiteName}}.<br><br>\n\nNếu đó không phải là bạn, bạn có thể bỏ qua email này.<br><br>\n\nNhấp vào liên kết sau để chọn một mật khẩu mới:<br>\n<a href='{{.PassResetUrl}}' target='_blank'>{{.PassResetUrl}}</a>\n"
+        other: "Somebody asked to reset your password on {{.SiteName}}.<br><br>\n\nIf it was not you, you can safely ignore this email.<br><br>\n\nClick the following link to choose a new password:<br>\n<a href='{{.PassResetUrl}}' target='_blank'>{{.PassResetUrl}}</a>\n<br><br>\n\n--<br>\nNote: This is an automatic system email, please do not reply to this message as your response will not be seen."
     register:
       title:
         other: "[{{.SiteName}}] Xác nhận tài khoản mới của bạn"
       body:
-        other: "Chào mừng bạn đến với {{.SiteName}}!<br><br>\n\nNhấp vào liên kết sau để xác nhận và kích hoạt tài khoản mới của bạn:<br>\n<a href='{{.RegisterUrl}}' target='_blank'>{{.RegisterUrl}}</a><br><br>\n\nNếu liên kết trên không thể nhấp, hãy thử sao chép và dán nó vào thanh địa chỉ của trình duyệt web của bạn.\n"
+        other: "Welcome to {{.SiteName}}!<br><br>\n\nClick the following link to confirm and activate your new account:<br>\n<a href='{{.RegisterUrl}}' target='_blank'>{{.RegisterUrl}}</a><br><br>\n\nIf the above link is not clickable, try copying and pasting it into the address bar of your web browser.\n<br><br>\n\n--<br>\nNote: This is an automatic system email, please do not reply to this message as your response will not be seen."
     test:
       title:
         other: "[{{.SiteName}}] Email kiểm tra"
       body:
-        other: "Đây là một email kiểm tra."
+        other: "This is a test email.\n<br><br>\n\n--<br>\nNote: This is an automatic system email, please do not reply to this message as your response will not be seen."
   action_activity_type:
     upvote:
       other: bình chọn lên
@@ -510,7 +510,7 @@ backend:
     downvoted:
       other: đã bình chọn xuống
     accept:
-      other:
+      other: chấp nhận
     accepted:
       other: đã chấp nhận
     edit:
@@ -525,12 +525,269 @@ backend:
   reaction:
     tooltip:
       other: "{{ .Names }} và {{ .Count }} thêm..."
+  badge:
+    default_badges:
+      autobiographer:
+        name:
+          other: Tác giả tự truyện
+        desc:
+          other: Đã điền thông tin <a href="{{ .ProfileURL }}" target="_blank">hồ sơ</a>.
+      certified:
+        name:
+          other: Đã xác minh
+        desc:
+          other: Hoàn thành hướng dẫn cho người dùng mới của chúng tôi.
+      editor:
+        name:
+          other: Trình chỉnh sửa
+        desc:
+          other: Chỉnh sửa bài đăng đầu tiên.
+      first_flag:
+        name:
+          other: Cờ đầu tiên
+        desc:
+          other: Lần đầu tiên báo cáo một bài viết.
+      first_upvote:
+        name:
+          other: Lượt thích đầu tiên
+        desc:
+          other: Lần đầu tiên báo cáo một bài viết.
+      first_link:
+        name:
+          other: Liên kết đầu tiên
+        desc:
+          other: Đầu tiên, Dirst đã thêm một liên kết đến một bài viết khác.
+      first_reaction:
+        name:
+          other: Phản ứng đầu tiên
+        desc:
+          other: Phản ứng với bài viết đầu tiên.
+      first_share:
+        name:
+          other: Chia sẻ đầu tiên
+        desc:
+          other: Lần đầu chia sẻ một bài viết.
+      scholar:
+        name:
+          other: Học giả
+        desc:
+          other: Đặt một câu hỏi và chấp nhận một câu trả lời.
+      commentator:
+        name:
+          other: Bình luận viên
+        desc:
+          other: Để lại 5 bình luận.
+      new_user_of_the_month:
+        name:
+          other: Người dùng mới của tháng
+        desc:
+          other: Đóng góp nổi bật trong tháng đầu tiên của họ.
+      read_guidelines:
+        name:
+          other: Đọc hướng dẫn
+        desc:
+          other: Đọc [nguyên tắc cộng đồng].
+      reader:
+        name:
+          other: Người đọc
+        desc:
+          other: Đọc mọi câu trả lời trong một chủ đề có hơn 10 câu trả lời.
+      welcome:
+        name:
+          other: Xin chào
+        desc:
+          other: Đã nhận được phiếu tán thành.
+      nice_share:
+        name:
+          other: Chia sẻ hay
+        desc:
+          other: Đã chia sẻ một bài đăng với 25 khách truy cập.
+      good_share:
+        name:
+          other: Chia sẻ tốt
+        desc:
+          other: Đã chia sẻ một bài đăng với 300 khách truy cập.
+      great_share:
+        name:
+          other: Chia sẻ tuyệt vời
+        desc:
+          other: Đã chia sẻ một bài đăng với 1000 khách truy cập.
+      out_of_love:
+        name:
+          other: Hết yêu thích
+        desc:
+          other: Đã sử dụng 50 phiếu bầu trong một ngày.
+      higher_love:
+        name:
+          other: Thích cao hơn
+        desc:
+          other: Đã sử dụng 50 phiếu bầu trong một ngày.
+      crazy_in_love:
+        name:
+          other: Thích điên cuồng
+        desc:
+          other: Đã sử dụng 50 phiếu bầu trong một ngày 20 lần.
+      promoter:
+        name:
+          other: Người quảng bá
+        desc:
+          other: Đã mời một người dùng.
+      campaigner:
+        name:
+          other: Chiến dịch
+        desc:
+          other: Đã mời 3 người dùng cơ bản.
+      champion:
+        name:
+          other: Vô địch
+        desc:
+          other: Mời 5 thành viên.
+      thank_you:
+        name:
+          other: Cảm ơn bạn
+        desc:
+          other: Có 20 bài đăng được bình chọn đưa ra 10 phiếu bầu.
+      gives_back:
+        name:
+          other: Trả lại
+        desc:
+          other: Có 100 bài đăng được bình chọn và đưa ra 100 phiếu bầu.
+      empathetic:
+        name:
+          other: Đồng cảm
+        desc:
+          other: Có 500 bài đăng được bình chọn đưa ra 1000 phiếu bầu.
+      enthusiast:
+        name:
+          other: Người nhiệt thành
+        desc:
+          other: Đã truy cập 10 ngày liên tiếp.
+      aficionado:
+        name:
+          other: Người hâm mộ
+        desc:
+          other: Đã truy cập 100 ngày liên tiếp.
+      devotee:
+        name:
+          other: Tín đồ
+        desc:
+          other: Đã truy cập 365 ngày liên tiếp.
+      anniversary:
+        name:
+          other: Kỉ niệm
+        desc:
+          other: Thành viên tích cực trong một năm, đăng ít nhất một lần.
+      appreciated:
+        name:
+          other: Đánh giá cao
+        desc:
+          other: Nhận được 1 lượt bình chọn cho 20 bài viết.
+      respected:
+        name:
+          other: Tôn trọng
+        desc:
+          other: Nhận được 2 lượt bình chọn cho 100 bài viết.
+      admired:
+        name:
+          other: Ngưỡng mộ
+        desc:
+          other: Nhận được 5 lượt bình chọn trên 300 bài đăng.
+      solved:
+        name:
+          other: Đã giải quyết
+        desc:
+          other: Có một câu trả lời được chấp nhận.
+      guidance_counsellor:
+        name:
+          other: Cố vấn hướng dẫn
+        desc:
+          other: Có 10 câu trả lời được chấp nhận.
+      know_it_all:
+        name:
+          other: Biết tất cả
+        desc:
+          other: Có 50 câu trả lời được chấp nhận.
+      solution_institution:
+        name:
+          other: Viện giải pháp
+        desc:
+          other: Có 150 câu trả lời được chấp nhận.
+      nice_answer:
+        name:
+          other: Câu trả lời tốt
+        desc:
+          other: Điểm trả lời từ 10 trở lên.
+      good_answer:
+        name:
+          other: Câu trả lời của bạn
+        desc:
+          other: Điểm trả lời từ 25 trở lên.
+      great_answer:
+        name:
+          other: Câu trả lời tuyệt vời
+        desc:
+          other: Điểm trả lời từ 50 trở lên.
+      nice_question:
+        name:
+          other: Câu trả lời tốt
+        desc:
+          other: Điểm trả lời từ 10 trở lên.
+      good_question:
+        name:
+          other: Câu trả lời tốt
+        desc:
+          other: Điểm trả lời từ 25 trở lên.
+      great_question:
+        name:
+          other: Câu trả lời tốt
+        desc:
+          other: Điểm trả lời từ 50 trở lên.
+      popular_question:
+        name:
+          other: Câu hỏi phổ biến
+        desc:
+          other: Câu hỏi với 500 lượt xem.
+      notable_question:
+        name:
+          other: Câu hỏi đáng chú ý
+        desc:
+          other: Câu hỏi với 1.000 lượt xem.
+      famous_question:
+        name:
+          other: Câu hỏi nổi tiếng
+        desc:
+          other: Câu hỏi với 5.000 lượt xem.
+      popular_link:
+        name:
+          other: Liên kết phổ biến
+        desc:
+          other: Đã đăng một liên kết bên ngoài với 50 lần nhấp chuột.
+      hot_link:
+        name:
+          other: Liên kết nổi bật
+        desc:
+          other: Đã đăng một liên kết bên ngoài với 300 lần nhấp chuột.
+      famous_link:
+        name:
+          other: Liên kết nổi tiếng
+        desc:
+          other: Đã đăng một liên kết bên ngoài với 100 lần nhấp chuột.
+    default_badge_groups:
+      getting_started:
+        name:
+          other: Bắt đầu
+      community:
+        name:
+          other: Cộng đồng
+      posting:
+        name:
+          other: Viết bài thảo luận
 # The following fields are used for interface presentation(Front-end)
 ui:
   how_to_format:
     title: Cách định dạng
     desc: >-
-      <ul class="mb-0"><li><p class="mb-2">to make links</p><pre class="mb-2"><code>&lt;https://url.com&gt;<br/><br/>[Title](https://url.com)</code></pre></li><li><p class="mb-2">put returns between paragraphs</p></li><li><p class="mb-2"><em>_italic_</em> or **<strong>bold</strong>**</p></li><li><p class="mb-2">indent code by 4 spaces</p></li><li><p class="mb-2">quote by placing <code>&gt;</code> at start of line</p></li><li><p class="mb-2">backtick escapes <code>`like _this_`</code></p></li><li><p class="mb-2">create code fences with backticks <code>`</code></p><pre class="mb-0"><code>```<br/>code here<br/>```</code></pre></li></ul>
+      <ul class="mb-0"><li><p class="mb-2">mention a post: <code>#post_id</code></p></li> <li><p class="mb-2">to make links</p><pre class="mb-2"><code>&lt;https://url.com&gt;<br/><br/>[Title](https://url.com)</code></pre></li><li><p class="mb-2">put returns between paragraphs</p></li><li><p class="mb-2"><em>_italic_</em> or **<strong>bold</strong>**</p></li><li><p class="mb-2">indent code by 4 spaces</p></li><li><p class="mb-2">quote by placing <code>&gt;</code> at start of line</p></li><li><p class="mb-2">backtick escapes <code>`like _this_`</code></p></li><li><p class="mb-2">create code fences with backticks <code>`</code></p><pre class="mb-0"><code>```<br/>code here<br/>```</code></pre></li></ul>
   pagination:
     prev: Trước
     next: Tiếp
@@ -579,6 +836,9 @@ ui:
       posts: Bài đăng
       invites: Lời mời
       votes: Bình chọn
+    answer: Câu trả lời
+    question: Câu hỏi
+    badge_award: Huy hiệu
   suspended:
     title: Tài khoản của bạn đã bị đình chỉ
     until_time: "Tài khoản của bạn đã bị đình chỉ cho đến {{ time }}."
@@ -601,8 +861,8 @@ ui:
       gantt_chart: Biểu đồ Gantt
       pie_chart: Biểu đồ tròn
     code:
-      text: Mẫu mã
-      add_code: Thêm mẫu mã
+      text: Mẫu code
+      add_code: Thêm code mẫu
       form:
         fields:
           code:
@@ -644,7 +904,7 @@ ui:
             msg:
               empty: Tệp không thể trống.
               only_image: Chỉ cho phép tệp hình ảnh.
-              max_size: Kích thước tệp không vượt quá 4 MB.
+              max_size: File size cannot exceed {{size}} MB.
           desc:
             label: Mô tả
       tab_url: URL hình ảnh
@@ -671,7 +931,7 @@ ui:
       form:
         fields:
           url:
-            label: URL
+            label: Đường link url
             msg:
               empty: URL không thể trống.
           name:
@@ -686,6 +946,10 @@ ui:
       text: Bảng
       heading: Tiêu đề
       cell: Ô
+    file:
+      text: Attach files
+      not_supported: "Don’t support that file type. Try again with {{file_type}}."
+      max_size: "Attach files size cannot exceed {{size}} MB."
   close_modal:
     title: Tôi đang đóng bài đăng này với lý do...
     btn_cancel: Hủy
@@ -718,12 +982,12 @@ ui:
             empty: Tên hiển thị không thể trống.
             range: Tên hiển thị tối đa 35 ký tự.
         slug_name:
-          label: URL slug
-          desc: URL slug tối đa 35 ký tự.
+          label: Đường dẫn URL
+          desc: Đường dẫn tối đa 35 ký tự.
           msg:
-            empty: URL slug không thể trống.
-            range: URL slug tối đa 35 ký tự.
-            character: URL slug chứa bộ ký tự không được phép.
+            empty: Đường dẫn URL không thể trống.
+            range: Đường dẫn URL tối đa 35 ký tự.
+            character: Đường dẫn URL chứa bộ ký tự không được phép.
         desc:
           label: Mô tả
         revision:
@@ -732,7 +996,7 @@ ui:
           label: Tóm tắt chỉnh sửa
           placeholder: >-
             Giải thích ngắn gọn các thay đổi của bạn (sửa chính tả, sửa ngữ pháp, cải thiện định dạng)
-    btn_cancel:
+    btn_cancel: Hủy
     btn_submit: Gửi
     btn_post: Đăng thẻ mới
   tag_info:
@@ -750,9 +1014,9 @@ ui:
     delete:
       title: Xóa thẻ này
       tip_with_posts: >-
-        <p>We do not allow <strong>deleting tag with posts</strong>.</p> <p>Please remove this tag from the posts first.</p>
+        <p>Chúng tôi không cho phép <strong>xóa thẻ có bài đăng</strong>.</p> <p>Vui lòng xóa thẻ này khỏi các bài đăng trước.</p>
       tip_with_synonyms: >-
-        <p>We do not allow <strong>deleting tag with synonyms</strong>.</p> <p>Please remove the synonyms from this tag first.</p>
+        <p>Chúng tôi không cho phép <strong>xóa thẻ có từ đồng nghĩa</strong>.</p> <p>Vui lòng xóa các từ đồng nghĩa khỏi thẻ này trước.</p>
       tip: Bạn có chắc chắn muốn xóa không?
       close: Đóng
   edit_tag:
@@ -766,9 +1030,9 @@ ui:
     long_date_with_year: "MMM D, YYYY"
     long_date_with_time: "MMM D, YYYY [at] HH:mm"
     now: bây giờ
-    x_seconds_ago: "{{count}}s trước"
-    x_minutes_ago: "{{count}}m trước"
-    x_hours_ago: "{{count}}h trước"
+    x_seconds_ago: "{{count}}giây trước"
+    x_minutes_ago: "{{count}}phút trước"
+    x_hours_ago: "{{count}}giờ trước"
     hour: giờ
     day: ngày
     hours: giờ
@@ -776,11 +1040,11 @@ ui:
   reaction:
     heart: trái tim
     smile: nụ cười
-    frown: khắc nghiệt
-    btn_label: thêm hoặc loại bỏ lại
-    undo_emoji: trở lại {{ emoji }} lặp lại
-    react_emoji: react with {{ emoji }}
-    unreact_emoji: react with {{ emoji }}
+    frown: nhăn mặt
+    btn_label: thêm hoặc loại bỏ phản ứng
+    undo_emoji: bỏ dấu {{ emoji }} phản ứng
+    react_emoji: biểu cảm với {{ emoji }}
+    unreact_emoji: hủy biểu cảm {{ emoji }}
   comment:
     btn_add_comment: Thêm bình luận
     reply_to: Trả lời cho
@@ -826,6 +1090,7 @@ ui:
     search_placeholder: Lọc theo tên thẻ
     no_desc: Thẻ không có mô tả.
     more: Thêm
+    wiki: Wiki
   ask:
     title: Thêm Câu hỏi
     edit_title: Chỉnh sửa Câu hỏi
@@ -838,7 +1103,7 @@ ui:
           label: Sửa đổi
         title:
           label: Tiêu đề
-          placeholder: Hãy cụ thể và tưởng tượng bạn đang hỏi một người khác
+          placeholder: Hãy cụ thể và tưởng tượng rằng bạn đang hỏi một người khác
           msg:
             empty: Tiêu đề không thể trống.
             range: Tiêu đề tối đa 150 ký tự
@@ -874,6 +1139,7 @@ ui:
       question: Câu hỏi
       tag: Thẻ
       user: Người dùng
+      badges: Danh hiệu
       profile: Hồ sơ
       setting: Cài đặt
       logout: Đăng xuất
@@ -899,11 +1165,11 @@ ui:
       Bạn gần như đã hoàn tất! Chúng tôi đã gửi một email kích hoạt đến <bold>{{mail}}</bold>. Vui lòng làm theo hướng dẫn trong email để kích hoạt tài khoản của bạn.
     info: "Nếu không nhận được, hãy kiểm tra thư mục spam của bạn."
     another: >-
-      Chúng tôi đã gửi một email kích hoạt khác cho bạn tại <bold>{{mail}}</bold>. Có thể mất vài phút để nó đến; hãy chắc chắn kiểm tra thư mục spam của bạn.
+      Chúng tôi đã gửi một email kích hoạt khác cho bạn tại <bold>{{mail}}</bold>. Có thể mất vài phút để nó đến; hãy chắc chắn kiểm tra thư mục thư rác của bạn.
     btn_name: Gửi lại email kích hoạt
     change_btn_name: Thay đổi email
     msg:
-      empty: Không thể trống.
+      empty: Không thể để trống mục này.
     resend_email:
       url_label: Bạn có chắc chắn muốn gửi lại email kích hoạt không?
       url_text: Bạn cũng có thể cung cấp liên kết kích hoạt ở trên cho người dùng.
@@ -917,8 +1183,8 @@ ui:
       label: Tên
       msg:
         empty: Tên không thể trống.
-        range: Độ dài của tên phải từ 4 đến 30 ký tự.
-        character: 'Chỉ sử dụng bộ ký tự "a-z", "0-9", " - . _"'
+        range: Độ dài của tên phải từ 2 đến 30 ký tự.
+        character: 'Chỉ sử dụng bộ ký tự "a-z", "0-9", , "A-Z", " - . _"'
     email:
       label: Email
       msg:
@@ -993,7 +1259,7 @@ ui:
         msg_range: Tên hiển thị tối đa 30 ký tự.
       username:
         label: Tên người dùng
-        caption: Mọi người có thể nhắc đến bạn là "@username".
+        caption: Mọi người có thể nhắc đến bạn với "@username".
         msg: Tên người dùng không thể trống.
         msg_range: Tên người dùng tối đa 30 ký tự.
         character: 'Chỉ sử dụng bộ ký tự "a-z", "0-9", " - . _"'
@@ -1019,7 +1285,7 @@ ui:
       turn_on: Bật
       inbox:
         label: Thông báo hộp thư đến
-        description: Các câu trả lời cho câu hỏi của bạn, bình luận, lời mời, và nhiều hơn nữa.
+        description: Các câu trả lời cho câu hỏi của bạn, bình luận, lời mời và nhiều hơn nữa.
       all_new_question:
         label: Tất cả câu hỏi mới
         description: Nhận thông báo về tất cả các câu hỏi mới. Tối đa 50 câu hỏi mỗi tuần.
@@ -1033,7 +1299,7 @@ ui:
       change_email_info: >-
         Chúng tôi đã gửi một email đến địa chỉ đó. Vui lòng làm theo hướng dẫn xác nhận.
       email:
-        label: Email mới
+        label: Email
       new_email:
         label: Email mới
         msg: Email mới không được để trống.
@@ -1073,9 +1339,13 @@ ui:
   related_question:
     title: Các câu hỏi liên quan
     answers: câu trả lời
+  linked_question:
+    title: Linked Questions
+    description: Questions linked to
+    no_linked_question: No questions linked from this question.
   invite_to_answer:
-    title: People Asked
-    desc: Select people who you think might know the answer.
+    title: Mời mọi người
+    desc: Mời những người bạn nghĩ có thể trả lời.
     invite: Mời trả lời
     add: Thêm người
     search: Tìm kiếm người
@@ -1233,8 +1503,8 @@ ui:
   account_result:
     success: Tài khoản mới của bạn đã được xác nhận; bạn sẽ được chuyển hướng đến trang chủ.
     link: Tiếp tục đến trang chủ
-    oops: Oops!
-    invalid: The link you used no longer works.
+    oops: Rất tiếc!
+    invalid: Liên kết bạn đã dùng không còn hoạt động nữa.
     confirm_new_email: Email của bạn đã được cập nhật.
     confirm_new_email_invalid: >-
       Xin lỗi, liên kết xác nhận này không còn hợp lệ. Có thể email của bạn đã được thay đổi?
@@ -1256,7 +1526,9 @@ ui:
     answers: Câu trả lời
     newest: Mới nhất
     active: Hoạt động
-    hot: Hot
+    hot: Được nhiều quan tâm
+    frequent: Frequent
+    recommend: Đề xuất
     score: Điểm
     unanswered: Chưa được trả lời
     modified: đã chỉnh sửa
@@ -1275,19 +1547,22 @@ ui:
     reputation: Danh tiếng
     comments: Bình luận
     votes: Bình chọn
+    badges: Danh hiệu
     newest: Mới nhất
     score: Điểm
     edit_profile: Chỉnh sửa hồ sơ
     visited_x_days: "Đã truy cập {{ count }} ngày"
     viewed: Đã xem
     joined: Tham gia
+    comma: ","
     last_login: Đã xem
     about_me: Về tôi
     about_me_empty: "// Xin chào, Thế giới !"
     top_answers: Câu trả lời hàng đầu
     top_questions: Câu hỏi hàng đầu
     stats: Thống kê
-    list_empty: Không tìm thấy bài đăng.<br />Có thể bạn muốn chọn một tab khác?
+    list_empty: Không tìm thấy bài đăng.<br />Có thể bạn muốn chọn một thẻ khác?
+    content_empty: No posts found.
     accepted: Đã chấp nhận
     answered: đã trả lời
     asked: đã hỏi
@@ -1298,6 +1573,7 @@ ui:
     x_votes: phiếu bầu nhận được
     x_answers: câu trả lời
     x_questions: câu hỏi
+    recent_badges: Huy hiệu gần đây
   install:
     title: Cài đặt
     next: Tiếp theo
@@ -1321,7 +1597,7 @@ ui:
       msg: Máy chủ cơ sở dữ liệu không thể trống.
     db_name:
       label: Tên cơ sở dữ liệu
-      placeholder: answer
+      placeholder: câu trả lời
       msg: Tên cơ sở dữ liệu không thể trống.
     db_file:
       label: Tệp tin Database
@@ -1374,7 +1650,7 @@ ui:
       msg:
         empty: Email không thể trống.
         incorrect: Định dạng email không chính xác.
-    ready_title: Answer của bạn đã sẵn sàng
+    ready_title: Trang web của bạn đã sẵn sàng
     ready_desc: >-
       Nếu bạn cảm thấy muốn thay đổi thêm cài đặt nào đó, hãy truy cập <1>mục quản trị</1>; tìm nó trong menu trang.
     good_luck: "Chúc bạn vui vẻ và may mắn!"
@@ -1407,6 +1683,7 @@ ui:
     questions: Câu hỏi
     answers: Câu trả lời
     users: Người dùng
+    badges: Huy hiệu
     flags: Cờ
     settings: Cài đặt
     general: Chung
@@ -1423,13 +1700,25 @@ ui:
     css_html: CSS/HTML
     login: Đăng nhập
     privileges: Đặc quyền
-    plugins: Plugin
+    plugins: Plugins
     installed_plugins: Plugin đã cài đặt
   website_welcome: Chào mừng bạn đến với {{site_name}}
   user_center:
     login: Đăng nhập
     qrcode_login_tip: Vui lòng sử dụng {{ agentName }} để quét mã QR và đăng nhập.
     login_failed_email_tip: Đăng nhập thất bại, vui lòng cho phép ứng dụng này truy cập thông tin email của bạn trước khi thử lại.
+  badges:
+    modal:
+      title: Chúc mừng
+      content: Bạn đã nhận được huy hiệu mới.
+      close: Đóng
+      confirm: Xem huy hiệu
+    title: Huy hiệu
+    awarded: Giải Thưởng
+    earned_×: Nhận được ×{{ number }}
+    ×_awarded: "{{ number }} được trao tặng"
+    can_earn_multiple: Bạn có thể kiếm được nhiều lần.
+    earned: Đã nhận
   admin:
     admin_header:
       title: Quản trị
@@ -1438,6 +1727,8 @@ ui:
       welcome: Chào mừng bạn đến với Answer Admin!
       site_statistics: Thống kê trang
       questions: "Câu hỏi:"
+      resolved: "Resolved:"
+      unanswered: "Unanswered:"
       answers: "Câu trả lời:"
       comments: "Bình luận:"
       votes: "Phiếu bầu:"
@@ -1489,7 +1780,7 @@ ui:
       flagged_type: Đã đánh dấu {{ type }}
       created: Đã tạo
       action: Hành động
-      review: Xem xét
+      review: Đánh giá
     user_role_modal:
       title: Thay đổi vai trò người dùng thành...
       btn_cancel: Hủy
@@ -1509,8 +1800,8 @@ ui:
       form:
         fields:
           display_name:
-            label: Display name
-            msg_range: Display name up to 30 characters.
+            label: Tên hiển thị
+            msg_range: Tên hiển thị tối đa 30 ký tự.
           username:
             label: Tên người dùng
             msg_range: Tên người dùng tối đa 30 ký tự.
@@ -1531,7 +1822,7 @@ ui:
             msg: "Vui lòng nhập email của người dùng, một dòng mỗi người."
           display_name:
             label: Tên hiển thị
-            msg: Tên hiển thị phải có từ 4 đến 30 ký tự.
+            msg: Tên hiển thị phải có từ 2 đến 30 ký tự.
           email:
             label: Email
             msg: Email không hợp lệ.
@@ -1577,7 +1868,7 @@ ui:
         title: Xóa người dùng này
         content: Bạn có chắc chắn muốn xóa người dùng này không? Điều này là vĩnh viễn!
         remove: Xóa nội dung của họ
-        label: Xóa tất cả các câu hỏi, câu trả lời, bình luận, etc.
+        label: Xóa tất cả các câu hỏi, câu trả lời, bình luận, vv.
         text: Không chọn điều này nếu bạn chỉ muốn xóa tài khoản của người dùng.
       suspend_user:
         title: Đình chỉ người dùng này
@@ -1710,25 +2001,40 @@ ui:
     write:
       page_title: Viết
       restrict_answer:
-        title: Answer write
+        title: Câu trả lời chỉnh sửa
         label: Each user can only write one answer for each question
-        text: "Turn off to allow users to write multiple answers to the same question, which may cause answers to be unfocused."
+        text: "Tắt để cho phép người dùng viết nhiều câu trả lời cho cùng một câu hỏi, điều này có thể khiến các câu trả lời bị mất trọng tâm."
       recommend_tags:
         label: Thẻ được đề xuất
-        text: "Recommend tags will show in the dropdown list by default."
+        text: "Các thẻ gợi ý sẽ hiển thị trong danh sách thả xuống theo mặc định."
         msg:
-          contain_reserved: "recommended tags cannot contain reserved tags"
+          contain_reserved: "các thẻ được đề xuất không được chứa thẻ dự bị"
       required_tag:
-        title: Set required tags
-        label: Set “Recommend tags” as required tags
+        title: Đặt thẻ cần thiết
+        label: Đặt thẻ được đề xuất là bắt buộc
         text: "Mỗi câu hỏi mới phải có ít nhất một thẻ được đề xuất."
       reserved_tags:
         label: Thẻ dành riêng
-        text: "Reserved tags can only be used by moderator."
+        text: "Thẻ dành riêng chỉ có thể được thêm vào một bài đăng bởi điều hành viên."
+      image_size:
+        label: Max image size (MB)
+        text: "The maximum image upload size."
+      attachment_size:
+        label: Max attachment size (MB)
+        text: "The maximum attachment files upload size."
+      image_megapixels:
+        label: Max image megapixels
+        text: "Maximum number of megapixels allowed for an image."
+      image_extensions:
+        label: Authorized image extensions
+        text: "A list of file extensions allowed for image display, separate with commas."
+      attachment_extensions:
+        label: Authorized attachment extensions
+        text: "A list of file extensions allowed for upload, separate with commas. WARNING: Allowing uploads may cause security issues."
     seo:
       page_title: SEO
       permalink:
-        label: Permalink
+        label: Liên kết cố định
         text: Cấu trúc URL tùy chỉnh có thể cải thiện khả năng sử dụng và khả năng tương thích về sau của liên kết của bạn.
       robots:
         label: robots.txt
@@ -1788,7 +2094,7 @@ ui:
         text: "CẢNH BÁO: Nếu tắt, bạn có thể không thể đăng nhập nếu bạn chưa cấu hình phương thức đăng nhập khác trước đó."
     installed_plugins:
       title: Plugin đã cài đặt
-      plugin_link: Plugin mở rộng và mở rộng chức năng của Answer. Bạn có thể tìm thấy plugin trong <1>Kho Plugin Answer</1>.
+      plugin_link: Plugin mở rộng và mở rộng chức năng của trang web. Bạn có thể tìm thấy plugin trong <1>Kho Plugin Answer</1>.
       filter:
         all: Tất cả
         active: Đang hoạt động
@@ -1832,8 +2138,23 @@ ui:
         label: Mức độ danh tiếng yêu cầu
         text: Chọn mức danh tiếng yêu cầu cho các đặc quyền
       msg:
-        should_be_number: dữ liệu đầu vào phải là số
+        should_be_number: dữ liệu đầu vào phải là kiểu số
         number_larger_1: số phải bằng hoặc lớn hơn 1
+    badges:
+      action: Hành động
+      active: Hoạt động
+      activate: Kích hoạt
+      all: Tất cả
+      awards: Giải Thưởng
+      deactivate: Ngừng kích hoạt
+      filter:
+        placeholder: Lọc theo tên, user:id
+      group: Nhóm
+      inactive: Không hoạt động
+      name: Tên
+      show_logs: Hiển thị nhật ký
+      status: Trạng thái
+      title: Danh hiệu
   form:
     optional: (tùy chọn)
     empty: không thể trống
@@ -1890,7 +2211,7 @@ ui:
     title: "Lịch sử cho"
     tag_title: "Dòng thời gian cho"
     show_votes: "Hiển thị phiếu bầu"
-    n_or_a: Không có
+    n_or_a: N/A
     title_for_question: "Dòng thời gian cho"
     title_for_answer: "Dòng thời gian cho câu trả lời của {{ title }} bởi {{ author }}"
     title_for_tag: "Dòng thời gian cho thẻ"
@@ -1913,6 +2234,7 @@ ui:
     discard_confirm: Bạn có chắc chắn muốn hủy bản nháp của mình không?
   messages:
     post_deleted: Bài đăng này đã bị xóa.
+    post_cancel_deleted: This post has been undeleted.
     post_pin: Bài đăng này đã được ghim.
     post_unpin: Bài đăng này đã bị bỏ ghim.
     post_hide_list: Bài đăng này đã được ẩn khỏi danh sách.
@@ -1921,3 +2243,15 @@ ui:
     post_list: Bài đăng này đã được liệt kê.
     post_unlist: Bài đăng này đã được gỡ bỏ khỏi danh sách.
     post_pending: Bài đăng của bạn đang chờ xem xét. Đây là bản xem trước, nó sẽ được hiển thị sau khi được phê duyệt.
+    post_closed: This post has been closed.
+    answer_deleted: This answer has been deleted.
+    answer_cancel_deleted: This answer has been undeleted.
+    change_user_role: This user's role has been changed.
+    user_inactive: This user is already inactive.
+    user_normal: This user is already normal.
+    user_suspended: This user has been suspended.
+    user_deleted: This user has been deleted.
+    badge_activated: This badge has been activated.
+    badge_inactivated: This badge has been inactivated.
+
+

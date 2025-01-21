@@ -37,6 +37,7 @@ import {
 } from '@/utils';
 import { CURRENT_LANG_STORAGE_KEY } from '@/common/constants';
 import { BASE_ORIGIN } from '@/router/alias';
+import { setupInstallLanguage } from '@/utils/localize';
 
 import {
   FirstStep,
@@ -279,6 +280,7 @@ const Index: FC = () => {
           db_connection_success: res.db_connection_success,
         });
         if (res && res.config_file_exist) {
+          setupInstallLanguage(Storage.get(CURRENT_LANG_STORAGE_KEY));
           if (res.db_connection_success) {
             setStep(6);
           } else {

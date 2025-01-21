@@ -94,6 +94,9 @@ export const ADMIN_NAV_MENUS = [
     name: 'users',
   },
   {
+    name: 'badges',
+  },
+  {
     name: 'customize',
     children: [
       {
@@ -647,3 +650,5 @@ export const SYSTEM_AVATAR_OPTIONS = [
 ];
 
 export const TAG_SLUG_NAME_MAX_LENGTH = 35;
+
+export const DEFAULT_THEME_COLOR = '#0033ff';

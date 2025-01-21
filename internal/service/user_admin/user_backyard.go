@@ -22,30 +22,31 @@ package user_admin
 import (
 	"context"
 	"fmt"
-	"github.com/apache/incubator-answer/internal/base/constant"
-	"github.com/apache/incubator-answer/internal/base/handler"
-	"github.com/apache/incubator-answer/internal/base/translator"
-	"github.com/apache/incubator-answer/internal/base/validator"
-	answercommon "github.com/apache/incubator-answer/internal/service/answer_common"
-	"github.com/apache/incubator-answer/internal/service/comment_common"
-	"github.com/apache/incubator-answer/internal/service/export"
-	questioncommon "github.com/apache/incubator-answer/internal/service/question_common"
-	"github.com/google/uuid"
+	"github.com/apache/answer/internal/base/constant"
+	"github.com/apache/answer/internal/base/handler"
+	"github.com/apache/answer/internal/base/translator"
+	"github.com/apache/answer/internal/base/validator"
+	answercommon "github.com/apache/answer/internal/service/answer_common"
+	"github.com/apache/answer/internal/service/comment_common"
+	"github.com/apache/answer/internal/service/export"
+	questioncommon "github.com/apache/answer/internal/service/question_common"
+	"github.com/apache/answer/pkg/token"
 	"net/mail"
 	"strings"
 	"time"
 	"unicode"
 
-	"github.com/apache/incubator-answer/internal/base/pager"
-	"github.com/apache/incubator-answer/internal/base/reason"
-	"github.com/apache/incubator-answer/internal/entity"
-	"github.com/apache/incubator-answer/internal/schema"
-	"github.com/apache/incubator-answer/internal/service/activity"
-	"github.com/apache/incubator-answer/internal/service/auth"
-	"github.com/apache/incubator-answer/internal/service/role"
-	"github.com/apache/incubator-answer/internal/service/siteinfo_common"
-	usercommon "github.com/apache/incubator-answer/internal/service/user_common"
-	"github.com/apache/incubator-answer/pkg/checker"
+	"github.com/apache/answer/internal/base/pager"
+	"github.com/apache/answer/internal/base/reason"
+	"github.com/apache/answer/internal/entity"
+	"github.com/apache/answer/internal/schema"
+	"github.com/apache/answer/internal/service/activity"
+	"github.com/apache/answer/internal/service/auth"
+	"github.com/apache/answer/internal/service/role"
+	"github.com/apache/answer/internal/service/siteinfo_common"
+	usercommon "github.com/apache/answer/internal/service/user_common"
+	"github.com/apache/answer/internal/service/user_external_login"
+	"github.com/apache/answer/pkg/checker"
 	"github.com/jinzhu/copier"
 	"github.com/segmentfault/pacman/errors"
 	"github.com/segmentfault/pacman/log"
@@ -76,6 +77,7 @@ type UserAdminService struct {
 	questionCommonRepo    questioncommon.QuestionRepo
 	answerCommonRepo      answercommon.AnswerRepo
 	commentCommonRepo     comment_common.CommentCommonRepo
+	userExternalLoginRepo user_external_login.UserExternalLoginRepo
 }
 
 // NewUserAdminService new user admin service
@@ -90,6 +92,7 @@ func NewUserAdminService(
 	questionCommonRepo questioncommon.QuestionRepo,
 	answerCommonRepo answercommon.AnswerRepo,
 	commentCommonRepo comment_common.CommentCommonRepo,
+	userExternalLoginRepo user_external_login.UserExternalLoginRepo,
 ) *UserAdminService {
 	return &UserAdminService{
 		userRepo:              userRepo,
@@ -102,6 +105,7 @@ func NewUserAdminService(
 		questionCommonRepo:    questionCommonRepo,
 		answerCommonRepo:      answerCommonRepo,
 		commentCommonRepo:     commentCommonRepo,
+		userExternalLoginRepo: userExternalLoginRepo,
 	}
 }
 
@@ -146,6 +150,13 @@ func (us *UserAdminService) UpdateUserStatus(ctx context.Context, req *schema.Up
 	// remove all content that user created, such as question, answer, comment, etc.
 	if req.RemoveAllContent {
 		us.removeAllUserCreatedContent(ctx, userInfo.ID)
+	}
+
+	if req.IsDeleted() {
+		err := us.userExternalLoginRepo.DeleteUserExternalLoginByUserID(ctx, userInfo.ID)
+		if err != nil {
+			log.Errorf("remove all user external login error: %v", err)
+		}
 	}
 
 	// if user reputation is zero means this user is inactive, so try to activate this user.
@@ -531,7 +542,7 @@ func (us *UserAdminService) GetUserActivation(ctx context.Context, req *schema.G
 		Email:  userInfo.EMail,
 		UserID: userInfo.ID,
 	}
-	code := uuid.NewString()
+	code := token.GenerateToken()
 	us.emailService.SaveCode(ctx, userInfo.ID, code, data.ToJSONString())
 	resp = &schema.GetUserActivationResp{
 		ActivationURL: fmt.Sprintf("%s/users/account-activation?code=%s", general.SiteUrl, code),
@@ -558,8 +569,7 @@ func (us *UserAdminService) SendUserActivation(ctx context.Context, req *schema.
 		Email:  userInfo.EMail,
 		UserID: userInfo.ID,
 	}
-	code := uuid.NewString()
-
+	code := token.GenerateToken()
 	verifyEmailURL := fmt.Sprintf("%s/users/account-activation?code=%s", general.SiteUrl, code)
 	title, body, err := us.emailService.RegisterTemplate(ctx, verifyEmailURL)
 	if err != nil {

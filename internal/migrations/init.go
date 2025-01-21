@@ -23,15 +23,15 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/apache/incubator-answer/internal/base/constant"
+	"github.com/apache/answer/internal/base/constant"
 	"time"
 
-	"github.com/apache/incubator-answer/internal/base/data"
-	"github.com/apache/incubator-answer/internal/repo/unique"
-	"github.com/apache/incubator-answer/internal/schema"
+	"github.com/apache/answer/internal/base/data"
+	"github.com/apache/answer/internal/repo/unique"
+	"github.com/apache/answer/internal/schema"
 	"github.com/segmentfault/pacman/log"
 
-	"github.com/apache/incubator-answer/internal/entity"
+	"github.com/apache/answer/internal/entity"
 	"golang.org/x/crypto/bcrypt"
 	"xorm.io/xorm"
 )
@@ -79,6 +79,7 @@ func (m *Mentor) InitDB() error {
 	m.do("init site info privilege rank", m.initSiteInfoPrivilegeRank)
 	m.do("init site info write", m.initSiteInfoWrite)
 	m.do("init default content", m.initDefaultContent)
+	m.do("init default badges", m.initDefaultBadges)
 	return m.err
 }
 
@@ -252,7 +253,11 @@ func (m *Mentor) initSiteInfoPrivilegeRank() {
 
 func (m *Mentor) initSiteInfoWrite() {
 	writeData := map[string]interface{}{
-		"restrict_answer": true,
+		"restrict_answer":       true,
+		"max_image_size":        4,
+		"max_attachment_size":   8,
+		"max_image_megapixel":   40,
+		"authorized_extensions": []string{"jpg", "jpeg", "png", "gif", "webp"},
 	}
 	writeDataBytes, _ := json.Marshal(writeData)
 	_, m.err = m.engine.Context(m.ctx).Insert(&entity.SiteInfo{
@@ -410,4 +415,23 @@ func (m *Mentor) initDefaultContent() {
 	if m.err != nil {
 		return
 	}
+}
+
+func (m *Mentor) initDefaultBadges() {
+	uniqueIDRepo := unique.NewUniqueIDRepo(&data.Data{DB: m.engine})
+
+	_, m.err = m.engine.Context(m.ctx).Insert(defaultBadgeGroupTable)
+	if m.err != nil {
+		return
+	}
+	for _, badge := range defaultBadgeTable {
+		badge.ID, m.err = uniqueIDRepo.GenUniqueIDStr(m.ctx, new(entity.Badge).TableName())
+		if m.err != nil {
+			return
+		}
+		if _, m.err = m.engine.Context(m.ctx).Insert(badge); m.err != nil {
+			return
+		}
+	}
+	return
 }

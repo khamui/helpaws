@@ -40,14 +40,16 @@ import { useSkeletonControl } from '@/hooks';
 export const QUESTION_ORDER_KEYS: Type.QuestionOrderBy[] = [
   'newest',
   'active',
-  'hot',
-  'score',
   'unanswered',
+  'recommend',
+  'frequent',
+  'score',
 ];
 interface Props {
-  source: 'questions' | 'tag';
+  source: 'questions' | 'tag' | 'linked';
   order?: Type.QuestionOrderBy;
   data;
+  orderList?: Type.QuestionOrderBy[];
   isLoading: boolean;
 }
 
@@ -55,6 +57,7 @@ const QuestionList: FC<Props> = ({
   source,
   order,
   data,
+  orderList,
   isLoading = false,
 }) => {
   const { t } = useTranslation('translation', { keyPrefix: 'question' });
@@ -65,6 +68,7 @@ const QuestionList: FC<Props> = ({
   const curPage = Number(urlSearchParams.get('page')) || 1;
   const pageSize = 20;
   const count = data?.count || 0;
+  const orderKeys = orderList || QUESTION_ORDER_KEYS;
 
   return (
     <div>
@@ -75,10 +79,11 @@ const QuestionList: FC<Props> = ({
             : t('x_questions', { count })}
         </h5>
         <QueryGroup
-          data={QUESTION_ORDER_KEYS}
+          data={orderKeys}
           currentSort={curOrder}
           pathname={source === 'questions' ? '/questions' : ''}
           i18nKeyPrefix="question"
+          maxBtnCount={source === 'tag' ? 3 : 4}
         />
       </div>
       <ListGroup className="rounded-0">
@@ -114,9 +119,15 @@ const QuestionList: FC<Props> = ({
                     />
                     •
                     <FormatTime
-                      time={li.operated_at}
+                      time={
+                        curOrder === 'active' ? li.operated_at : li.created_at
+                      }
                       className="text-secondary ms-1 flex-shrink-0"
-                      preFix={t(li.operation_type)}
+                      preFix={
+                        curOrder === 'active'
+                          ? t(li.operation_type)
+                          : t('asked')
+                      }
                     />
                   </div>
                   <Counts

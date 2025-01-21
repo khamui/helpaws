@@ -108,6 +108,10 @@ const routes: RouteNode[] = [
             page: 'pages/Questions/Detail',
           },
           {
+            path: 'questions/linked/:qid',
+            page: 'pages/Questions/Linked',
+          },
+          {
             path: '/search',
             page: 'pages/Search',
             guard: () => {
@@ -216,6 +220,14 @@ const routes: RouteNode[] = [
           {
             path: 'review',
             page: 'pages/Review',
+          },
+          {
+            path: '/badges',
+            page: 'pages/Badges/index',
+          },
+          {
+            path: '/badges/:badge_id',
+            page: 'pages/Badges/Detail/index',
           },
         ],
       },
@@ -399,6 +411,10 @@ const routes: RouteNode[] = [
           {
             path: ':slug_name',
             page: 'pages/Admin/Plugins/Config',
+          },
+          {
+            path: 'badges',
+            page: 'pages/Admin/Badges',
           },
         ],
       },

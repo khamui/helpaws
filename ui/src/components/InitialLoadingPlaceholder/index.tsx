@@ -17,9 +17,18 @@
  * under the License.
  */
 
-package schema
+// Same as spin in `public/index.html`
 
-type GetEmbedOptionResp struct {
-	Platform string `json:"platform"`
-	Enable   bool   `json:"enable"`
+import './index.scss';
+
+function InitialLoadingPlaceholder() {
+  return (
+    <div className="InitialLoadingPlaceholder">
+      <div className="InitialLoadingPlaceholder-spinnerContainer">
+        <div className="InitialLoadingPlaceholder-spinner" />
+      </div>
+    </div>
+  );
 }
+
+export default InitialLoadingPlaceholder;

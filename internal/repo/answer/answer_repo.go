@@ -23,19 +23,19 @@ import (
 	"context"
 	"time"
 
-	"github.com/apache/incubator-answer/internal/base/constant"
-	"github.com/apache/incubator-answer/internal/base/data"
-	"github.com/apache/incubator-answer/internal/base/handler"
-	"github.com/apache/incubator-answer/internal/base/pager"
-	"github.com/apache/incubator-answer/internal/base/reason"
-	"github.com/apache/incubator-answer/internal/entity"
-	"github.com/apache/incubator-answer/internal/schema"
-	"github.com/apache/incubator-answer/internal/service/activity_common"
-	answercommon "github.com/apache/incubator-answer/internal/service/answer_common"
-	"github.com/apache/incubator-answer/internal/service/rank"
-	"github.com/apache/incubator-answer/internal/service/unique"
-	"github.com/apache/incubator-answer/pkg/uid"
-	"github.com/apache/incubator-answer/plugin"
+	"github.com/apache/answer/internal/base/constant"
+	"github.com/apache/answer/internal/base/data"
+	"github.com/apache/answer/internal/base/handler"
+	"github.com/apache/answer/internal/base/pager"
+	"github.com/apache/answer/internal/base/reason"
+	"github.com/apache/answer/internal/entity"
+	"github.com/apache/answer/internal/schema"
+	"github.com/apache/answer/internal/service/activity_common"
+	answercommon "github.com/apache/answer/internal/service/answer_common"
+	"github.com/apache/answer/internal/service/rank"
+	"github.com/apache/answer/internal/service/unique"
+	"github.com/apache/answer/pkg/uid"
+	"github.com/apache/answer/plugin"
 	"github.com/segmentfault/pacman/errors"
 	"github.com/segmentfault/pacman/log"
 )
@@ -268,6 +268,24 @@ func (ar *answerRepo) GetByID(ctx context.Context, answerID string) (*entity.Ans
 		resp.QuestionID = uid.EnShortID(resp.QuestionID)
 	}
 	return &resp, has, nil
+}
+
+func (ar *answerRepo) GetByIDs(ctx context.Context, answerIDs ...string) ([]*entity.Answer, error) {
+	for idx, answerID := range answerIDs {
+		answerIDs[idx] = uid.DeShortID(answerID)
+	}
+	var resp = make([]*entity.Answer, 0)
+	err := ar.data.DB.Context(ctx).In("id", answerIDs).Find(&resp)
+	if err != nil {
+		return nil, errors.InternalServer(reason.DatabaseError).WithError(err).WithStack()
+	}
+	if handler.GetEnableShortID(ctx) {
+		for _, item := range resp {
+			item.ID = uid.EnShortID(item.ID)
+			item.QuestionID = uid.EnShortID(item.QuestionID)
+		}
+	}
+	return resp, nil
 }
 
 func (ar *answerRepo) GetCountByQuestionID(ctx context.Context, questionID string) (int64, error) {

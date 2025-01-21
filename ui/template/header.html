@@ -27,12 +27,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" />
     <meta name="description" content="{{.description}}" data-rh="true" />
-    <meta name="generator" content="Answer {{.Version}} - https://github.com/apache/incubator-answer version {{.Revision}}">
+    <meta name="generator" content="Answer {{.Version}} - https://github.com/apache/answer version {{.Revision}}">
     {{if .keywords }}<meta name="keywords" content="{{.keywords}}" data-rh="true" />{{end}}
     {{if .noindex }}<meta name="robots" content="noindex">{{end}}
 
     <link rel="canonical" href="{{.siteinfo.Canonical}}" />
     <link rel="manifest" href="{{$.baseURL}}/manifest.json" />
+    <link rel="search" type="application/opensearchdescription+xml" href="{{$.baseURL}}/opensearch.xml" title="{{.siteinfo.General.Name}}" />
     <link href="{{.cssPath}}" rel="stylesheet" />
     <link href="{{$.baseURL}}/custom.css" rel="stylesheet" />
     <link
@@ -67,14 +68,14 @@
     <meta
             property="og:image"
             itemProp="image primaryImageOfPage"
-            content="{{if $.siteinfo.Branding.Favicon }}{{$.siteinfo.Branding.Favicon}}{{else}}{{$.baseURL}}/favicon.ico{{end}}"}
+            content="{{if $.siteinfo.Branding.Favicon }}{{$.siteinfo.Branding.Favicon}}{{else}}{{$.baseURL}}/favicon.ico{{end}}"
     />
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:domain" content="{{.siteinfo.General.SiteUrl}}" />
     <meta name="twitter:description" content="{{.description}}" />
     <meta
             name="twitter:image"
-            content="{{if $.siteinfo.Branding.Favicon }}{{$.siteinfo.Branding.Favicon}}{{else}}{{$.baseURL}}/favicon.ico{{end}}"}
+            content="{{if $.siteinfo.Branding.Favicon }}{{$.siteinfo.Branding.Favicon}}{{else}}{{$.baseURL}}/favicon.ico{{end}}"
     />
     <meta name="go-template">
     <!--customize_head-->
@@ -188,9 +189,13 @@
           </div>
         </div>
       </nav>
-      <div class="position-relative page-wrap">
-        {{template "sidenav" . }}
-        {{end}}
+      <div class="position-relative page-wrap d-flex flex-column flex-fill">
+        <div class="d-flex flex-column flex-fill container">
+          <div class="flex-fill row">
+            {{template "sidenav" . }}
+            {{end}}
+          </div>
+        </div>
       </div>
 
     </div>

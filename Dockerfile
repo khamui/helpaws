@@ -15,8 +15,8 @@
 # specific language governing permissions and limitations
 # under the License.
 
-FROM golang:1.19-alpine AS golang-builder
-LABEL maintainer="aichy@sf.com"
+FROM golang:1.22-alpine AS golang-builder
+LABEL maintainer="linkinstar@apache.org"
 
 ARG GOPROXY
 # ENV GOPROXY ${GOPROXY:-direct}
@@ -24,7 +24,7 @@ ARG GOPROXY
 
 ENV GOPATH /go
 ENV GOROOT /usr/local/go
-ENV PACKAGE github.com/apache/incubator-answer
+ENV PACKAGE github.com/apache/answer
 ENV BUILD_DIR ${GOPATH}/src/${PACKAGE}
 ENV ANSWER_MODULE ${BUILD_DIR}
 

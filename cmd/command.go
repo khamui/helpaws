@@ -24,11 +24,11 @@ import (
 	"os"
 	"strings"
 
-	"github.com/apache/incubator-answer/internal/base/conf"
-	"github.com/apache/incubator-answer/internal/cli"
-	"github.com/apache/incubator-answer/internal/install"
-	"github.com/apache/incubator-answer/internal/migrations"
-	"github.com/apache/incubator-answer/plugin"
+	"github.com/apache/answer/internal/base/conf"
+	"github.com/apache/answer/internal/cli"
+	"github.com/apache/answer/internal/install"
+	"github.com/apache/answer/internal/migrations"
+	"github.com/apache/answer/plugin"
 	"github.com/segmentfault/pacman/log"
 	"github.com/spf13/cobra"
 )
@@ -266,12 +266,17 @@ To run answer, use:
 			}
 
 			field := &cli.ConfigField{}
-			for _, f := range configFields {
-				switch f {
+			fmt.Println(configFields)
+			if len(configFields) > 0 {
+				switch configFields[0] {
 				case "allow_password_login":
 					field.AllowPasswordLogin = true
+				case "deactivate_plugin":
+					if len(configFields) > 1 {
+						field.DeactivatePluginSlugName = configFields[1]
+					}
 				default:
-					fmt.Printf("field %s not support\n", f)
+					fmt.Printf("field %s not support\n", configFields[0])
 				}
 			}
 			err = cli.SetDefaultConfig(c.Data.Database, c.Data.Cache, field)
